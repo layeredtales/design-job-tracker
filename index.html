@@ -392,7 +392,8 @@ async function pullCloud() {
   finally {if (generation === accountGeneration) {setLoading(false); queueCloudSave();}}
 }
 function accountUI() {
-  $('account-label').textContent = cloudUser?.email || 'Browser-only'; $('account-button-label').textContent = cloudUser ? 'Account' : 'Sign in';
+  const accountLabel = $('account-label'); if (accountLabel) accountLabel.textContent = cloudUser?.email || 'Browser-only';
+  $('account-button-label').textContent = cloudUser ? 'Account' : 'Sign in';
   $('sync-now').hidden = !cloudUser; $('save-footer').textContent = cloudUser ? 'Private applications and PDFs' : 'Private browser copy';
 }
 const workspacePreferenceKey = () => `${key}:workspace:${ownerKey()}`;
@@ -465,8 +466,9 @@ function revealApplication(id) {
 function updateWorkspace(all) {
   const view = $('view-filter').value, labels = {current:'Applications',due:'Follow-ups',archived:'Archive'};
   $('page-title').textContent = view === 'current' ? 'My Applications' : view === 'due' ? 'Follow-ups' : 'Archived Applications';
-  $('breadcrumb-view').textContent = labels[view];
-  $('workspace-date').textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const breadcrumb = $('breadcrumb-view'); if (breadcrumb) breadcrumb.textContent = labels[view];
+  const workspaceDate = $('workspace-date');
+  if (workspaceDate) workspaceDate.textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   $('nav-total').textContent = all.length;
   $('nav-due-count').textContent = all.filter(isDue).length;
   $('nav-archive-count').textContent = Object.values(entries).filter(e => e.archived).length;
