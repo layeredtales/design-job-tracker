@@ -56,6 +56,14 @@ details{border-top:1px solid var(--line);padding-top:14px}summary{cursor:pointer
 .workspace-bar .sticky-add{background:var(--primary);border-color:var(--primary);color:#052e44;font-weight:600}
 .workspace-bar .sticky-add:hover{background:#39b7fc;border-color:#39b7fc}
 @media(max-width:520px){.workspace-bar .sticky-add{width:36px;min-width:36px;min-height:36px;padding:7px}.workspace-bar .sticky-add span,#sync-now{display:none}}
+.status-overview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:0 0 20px;border-bottom:1px solid var(--line)}
+.status-tab{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px;padding:7px 10px;border:0;border-bottom:2px solid transparent;background:transparent;color:#56616e;text-align:left;font-size:12px}
+.status-tab:hover{background:#eaf4fa;color:#12384c}
+.status-tab[aria-pressed="true"]{border-bottom-color:var(--primary-ink);color:#005c91;font-weight:600}
+.status-tab-count{font-variant-numeric:tabular-nums;color:#778391}
+.status-tab[aria-pressed="true"] .status-tab-count{color:inherit}
+@media(max-width:760px){.status-overview{grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin-bottom:16px}.status-tab{min-height:38px;padding:6px 8px;font-size:11px}}
+@media(max-width:420px){.status-overview{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Keep the application list as the first, simplest thing to use. */
 .stats{display:none}
@@ -151,6 +159,7 @@ td{padding:9px 10px;vertical-align:middle}
 <div class="workspace">
 <main>
 <section class="page-heading"><div><div class="page-eyebrow"><span id="breadcrumb-view">Applications</span><span class="eyebrow-line"></span><span id="workspace-date"></span></div><h1 id="page-title">My Applications<span class="heading-dot">.</span></h1><p class="account-label" id="account-label">Browser-only</p></div><div class="utilities"><button class="iconbutton" id="export" title="Export applications to CSV" aria-label="Export applications to CSV"><i data-lucide="download"></i></button></div></section>
+<section id="status-overview" class="status-overview" aria-label="Application status overview"></section>
 <section class="stats" aria-label="Application overview" aria-hidden="true">
 <button class="stat stat-total" data-overview="all" aria-label="Show all applications"><span class="stat-label"><span class="desktop-stat-label">Applications</span><span class="mobile-stat-label">All</span><i data-lucide="layers"></i></span><strong id="total">0</strong></button>
 <button class="stat stat-active" data-overview="active" aria-label="Show active applications"><span class="stat-label">Active<i data-lucide="send"></i></span><strong id="active">0</strong></button>
@@ -413,6 +422,9 @@ function updateWorkspace(all) {
   $('followup-scope-wrap').hidden = view !== 'due';
   $('sort').parentElement.hidden = view === 'due';
   $('collection-context').textContent = cloudLoading ? 'Loading your applications...' : '';
+  $('status-overview').hidden = view !== 'current';
+  const statusTabs = [['','All',all.length],['active','Active',all.filter(isActive).length],...statuses.map(status => [status,status,all.filter(e => e.status === status).length])];
+  $('status-overview').innerHTML = statusTabs.map(([value,label,count]) => `<button class="status-tab" data-status-overview="${escapeHTML(value)}" aria-pressed="${view === 'current' && $('status-filter').value === value}"><span>${escapeHTML(label)}</span><span class="status-tab-count">${count}</span></button>`).join('');
   $('footer-count').textContent = `${all.length} application${all.length === 1 ? '' : 's'} in your workspace`;
   $('clear').hidden = !$('search').value && !$('status-filter').value && (view !== 'due' || $('followup-scope').value === 'due');
   for (const item of document.querySelectorAll('[data-view]')) item.setAttribute('aria-current',item.dataset.view === view ? 'page' : 'false');
@@ -632,6 +644,10 @@ for (const status of statuses) {$('status-filter').add(new Option(status,status)
 $('workspace-nav').addEventListener('click',event => {
   const item = event.target.closest('[data-view]'); if (!item) return;
   navigate(item.dataset.view);
+});
+ $('status-overview').addEventListener('click',event => {
+  const button = event.target.closest('[data-status-overview]'); if (!button) return;
+  $('view-filter').value = 'current'; $('status-filter').value = button.dataset.statusOverview; $('search').value = ''; page = 1; render();
 });
 document.querySelector('.stats').addEventListener('click',event => {
   const button = event.target.closest('[data-overview]'); if (!button) return;
