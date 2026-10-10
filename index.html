@@ -97,6 +97,10 @@ main{padding-top:16px}
 /* Keep the application list as the first, simplest thing to use. */
 .stats{display:none}
 .page-heading{margin-bottom:12px}
+
+/* Keep save state visible without adding a second row to the workspace header. */
+footer{align-items:center}
+footer .sync-inline{grid-column:auto;grid-row:auto;max-width:none;width:auto;padding:0;justify-content:flex-start;font-size:inherit;line-height:inherit;color:inherit}
 .page-heading h1{font-size:25px}
 .page-eyebrow,.account-label{display:none}
 .collection-heading{display:none}
@@ -184,7 +188,7 @@ td{padding:9px 10px;vertical-align:middle}
 <button class="nav-item" id="nav-due" data-view="due" title="Follow-ups"><i data-lucide="calendar-clock"></i><span>Follow-ups</span><span class="nav-count" id="nav-due-count">0</span></button>
 <button class="nav-item" id="nav-archived" data-view="archived" title="Archive"><i data-lucide="archive"></i><span>Archive</span><span class="nav-count" id="nav-archive-count">0</span></button>
 </nav>
-<div class="account-actions"><button class="command primary sticky-add" id="new-application" title="Add application" aria-label="Add application"><i data-lucide="plus"></i><span>Add application</span></button><button class="iconbutton" id="export" title="Export applications to CSV" aria-label="Export applications to CSV"><i data-lucide="download"></i></button><button class="iconbutton" id="sync-now" hidden title="Refresh and retry cloud sync" aria-label="Refresh and retry cloud sync"><i data-lucide="refresh-cw"></i></button><button class="command account-button" id="account-button"><i data-lucide="user-round"></i><span id="account-button-label">Sign in</span></button></div><span class="sync-inline"><span id="sync-status" role="status" aria-live="polite">Saved on this device</span></span></header>
+<div class="account-actions"><button class="command primary sticky-add" id="new-application" title="Add application" aria-label="Add application"><i data-lucide="plus"></i><span>Add application</span></button><button class="iconbutton" id="export" title="Export applications to CSV" aria-label="Export applications to CSV"><i data-lucide="download"></i></button><button class="iconbutton" id="sync-now" hidden title="Refresh and retry cloud sync" aria-label="Refresh and retry cloud sync"><i data-lucide="refresh-cw"></i></button><button class="command account-button" id="account-button"><i data-lucide="user-round"></i><span id="account-button-label">Sign in</span></button></div></header>
 <div class="workspace">
 <main>
 <h1 id="page-title" class="sr-only">My Applications</h1>
@@ -204,7 +208,7 @@ td{padding:9px 10px;vertical-align:middle}
 <div id="cards" class="application-cards"></div>
 <div class="pagination" id="pagination"><label><span class="sr-only">Rows per page</span><select id="page-size" class="page-size"><option value="25">25 per page</option><option value="50" selected>50 per page</option><option value="100">100 per page</option></select></label><div class="pager"><button class="iconbutton" id="prev" title="Previous page" aria-label="Previous page"><i data-lucide="chevron-left"></i></button><span class="page-label" id="page-label">1 / 1</span><button class="iconbutton" id="next" title="Next page" aria-label="Next page"><i data-lucide="chevron-right"></i></button></div></div>
 </section>
-<footer><span><i data-lucide="lock-keyhole"></i><span id="save-footer">Private browser copy</span></span><span id="footer-count"></span></footer>
+<footer><span><i data-lucide="lock-keyhole"></i><span id="save-footer">Private browser copy</span></span><span class="sync-inline"><span id="sync-status" role="status" aria-live="polite">Saved on this device</span></span><span id="footer-count"></span></footer>
 </main></div>
 <dialog id="editor" aria-labelledby="editor-title"><form id="editor-form"><div class="dialog-head"><div class="dialog-heading"><span class="dialog-icon"><i data-lucide="briefcase-business"></i></span><h2 id="editor-title">Add application</h2></div><button class="iconbutton" id="editor-close" type="button" title="Close application" aria-label="Close application"><i data-lucide="x"></i></button></div><div class="dialog-body"><div class="form-section-title">APPLICATION DETAILS</div><div class="form-grid">
 <label>Company<input id="entry-company" maxlength="200" required autocomplete="organization" placeholder="Company name"></label><label>Role<input id="entry-role" maxlength="300" required placeholder="Role title"></label>
