@@ -53,6 +53,10 @@ details{border-top:1px solid var(--line);padding-top:14px}summary{cursor:pointer
 @media(max-width:520px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{min-height:89px;padding:11px 9px}.stat-label{font-size:10px;line-height:1.35;min-height:27px;overflow-wrap:anywhere}.stat-label svg{display:none}.stat strong{font-size:28px}.mobile-export{display:inline-flex;width:100%;font-size:11px}.row-actions .iconbutton,.file-link,.text-button{min-height:42px}}
 @media(max-width:520px){.desktop-stat-label{display:none}.mobile-stat-label{display:inline}.stat{padding:11px 6px}.stat-label{overflow-wrap:normal;white-space:nowrap}.workspace-bar nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:100%}.nav-item{justify-content:center;font-size:10px;white-space:nowrap;padding:8px 4px;gap:4px}.nav-count{display:none}.company-title{scroll-margin-top:160px}}
 
+.workspace-bar .sticky-add{background:var(--primary);border-color:var(--primary);color:#052e44;font-weight:600}
+.workspace-bar .sticky-add:hover{background:#39b7fc;border-color:#39b7fc}
+@media(max-width:520px){.workspace-bar .sticky-add{width:36px;min-width:36px;min-height:36px;padding:7px}.workspace-bar .sticky-add span,#sync-now{display:none}}
+
 /* Keep the application list as the first, simplest thing to use. */
 .stats{display:none}
 .page-heading{margin-bottom:12px}
@@ -143,10 +147,10 @@ td{padding:9px 10px;vertical-align:middle}
 <button class="nav-item" id="nav-due" data-view="due" title="Follow-ups"><i data-lucide="calendar-clock"></i><span>Follow-ups</span><span class="nav-count" id="nav-due-count">0</span></button>
 <button class="nav-item" id="nav-archived" data-view="archived" title="Archive"><i data-lucide="archive"></i><span>Archive</span><span class="nav-count" id="nav-archive-count">0</span></button>
 </nav>
-<div class="account-actions"><button class="iconbutton" id="sync-now" hidden title="Refresh and retry cloud sync" aria-label="Refresh and retry cloud sync"><i data-lucide="refresh-cw"></i></button><button class="command account-button" id="account-button"><i data-lucide="user-round"></i><span id="account-button-label">Sign in</span></button></div><span class="sync-inline"><span id="sync-status" role="status" aria-live="polite">Saved on this device</span></span></header>
+<div class="account-actions"><button class="command primary sticky-add" id="new-application" title="Add application" aria-label="Add application"><i data-lucide="plus"></i><span>Add application</span></button><button class="iconbutton" id="sync-now" hidden title="Refresh and retry cloud sync" aria-label="Refresh and retry cloud sync"><i data-lucide="refresh-cw"></i></button><button class="command account-button" id="account-button"><i data-lucide="user-round"></i><span id="account-button-label">Sign in</span></button></div><span class="sync-inline"><span id="sync-status" role="status" aria-live="polite">Saved on this device</span></span></header>
 <div class="workspace">
 <main>
-<section class="page-heading"><div><div class="page-eyebrow"><span id="breadcrumb-view">Applications</span><span class="eyebrow-line"></span><span id="workspace-date"></span></div><h1 id="page-title">My Applications<span class="heading-dot">.</span></h1><p class="account-label" id="account-label">Browser-only</p></div><div class="utilities"><button class="iconbutton" id="export" title="Export applications to CSV" aria-label="Export applications to CSV"><i data-lucide="download"></i></button><button class="command primary" id="new-application" title="Add application" aria-label="Add application"><i data-lucide="plus"></i><span>Add application</span></button></div></section>
+<section class="page-heading"><div><div class="page-eyebrow"><span id="breadcrumb-view">Applications</span><span class="eyebrow-line"></span><span id="workspace-date"></span></div><h1 id="page-title">My Applications<span class="heading-dot">.</span></h1><p class="account-label" id="account-label">Browser-only</p></div><div class="utilities"><button class="iconbutton" id="export" title="Export applications to CSV" aria-label="Export applications to CSV"><i data-lucide="download"></i></button></div></section>
 <section class="stats" aria-label="Application overview" aria-hidden="true">
 <button class="stat stat-total" data-overview="all" aria-label="Show all applications"><span class="stat-label"><span class="desktop-stat-label">Applications</span><span class="mobile-stat-label">All</span><i data-lucide="layers"></i></span><strong id="total">0</strong></button>
 <button class="stat stat-active" data-overview="active" aria-label="Show active applications"><span class="stat-label">Active<i data-lucide="send"></i></span><strong id="active">0</strong></button>
