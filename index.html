@@ -86,6 +86,10 @@ td{padding:9px 10px;vertical-align:middle}
 .company-extra:empty{display:none}
 .date-input{font-size:12px}
 .notes-button{font-size:12px}
+.notes-button{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;max-height:2.9em;line-height:1.45;overflow:hidden;text-overflow:ellipsis}
+.pdf-button{position:relative;display:inline-flex;align-items:center;justify-content:center;width:34px;min-width:34px;min-height:34px;padding:0;white-space:nowrap;flex-shrink:0}
+.pdf-button svg{width:16px;height:16px}
+.pdf-count{position:absolute;top:-3px;right:-4px;display:grid;place-items:center;min-width:16px;height:16px;padding:0 3px;border:1px solid #fff;border-radius:8px;background:#e4f3fb;color:#006193;font-size:9px;line-height:1;font-variant-numeric:tabular-nums}
 .page-size{min-height:34px}
 #pdf-details{padding-top:8px}
 #pdf-details summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:38px}
@@ -127,7 +131,7 @@ td{padding:9px 10px;vertical-align:middle}
   .company-cell{align-items:flex-start}
   .company-avatar{width:32px;height:32px}
   .row-actions .iconbutton{width:36px;min-height:36px}
-  .pdf-button{min-height:36px}
+  .pdf-button{width:36px;min-width:36px;min-height:36px}
   .empty{display:block;border:0!important;background:transparent!important;padding:40px 10px!important}
   .empty td{display:block!important}
 }
@@ -457,7 +461,7 @@ function render() {
       <td><input type="date" class="date-input" data-field="applied" aria-label="Applied on for ${company}" value="${e.applied}"></td>
       <td><input type="date" class="date-input" data-field="followup" aria-label="Follow up for ${company}" value="${e.followup}">${$('view-filter').value === 'due' ? `<button class="text-button" data-complete="${id}" aria-label="Mark follow-up done for ${company}"><i data-lucide="check"></i>Done</button>` : ''}</td>
       <td><button class="notes-button" data-edit="${id}" title="Edit notes" aria-label="Notes for ${company}">${escapeHTML(e.notes)}</button></td>
-      <td><button class="pdf-button" data-docs="${id}" title="${docs.length ? 'View application PDFs' : 'Attach a PDF'}" aria-label="PDFs for ${company}"><i data-lucide="${docs.length ? 'file-text' : 'paperclip'}"></i>${docs.length || 'Add'}</button></td>
+      <td><button class="pdf-button" data-docs="${id}" title="${docs.length ? `View ${docs.length} application PDF${docs.length === 1 ? '' : 's'}` : 'Attach a PDF'}" aria-label="${docs.length ? `View ${docs.length} PDF${docs.length === 1 ? '' : 's'} for ${company}` : `Attach PDF for ${company}`}"><i data-lucide="${docs.length ? 'file-text' : 'paperclip'}"></i>${docs.length ? `<span class="pdf-count" aria-hidden="true">${docs.length}</span>` : ''}</button></td>
       <td><div class="row-actions"><button class="iconbutton" data-edit="${id}" title="Edit application" aria-label="Edit application for ${company}"><i data-lucide="pencil"></i></button><button class="iconbutton" data-archive="${id}" title="${e.archived ? 'Restore application' : 'Archive application'}" aria-label="${e.archived ? 'Restore' : 'Archive'} application for ${company}"><i data-lucide="${e.archived ? 'archive-restore' : 'archive'}"></i></button></div></td>
     </tr>`;
   }).join(''); icons();
